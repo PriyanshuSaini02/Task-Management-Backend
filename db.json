@@ -1,0 +1,89 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Design homepage mockup",
+      "status": "Done",
+      "assignedMembers": ["Alice Johnson", "Bob Smith"],
+      "dueDate": "2026-09-15",
+      "dueTime": "14:00",
+      "isAssigned": true,
+      "estimatedHours": 8,
+      "priority": "High",
+      "order": 1,
+      "createdOn": "2026-09-01"
+    },
+    {
+      "id": 2,
+      "title": "Implement user authentication",
+      "status": "In Progress",
+      "assignedMembers": ["Charlie Brown"],
+      "dueDate": "2026-09-20",
+      "dueTime": "17:30",
+      "isAssigned": true,
+      "estimatedHours": 16,
+      "priority": "Critical",
+      "order": 2,
+      "createdOn": "2026-09-02"
+    },
+    {
+      "id": 3,
+      "title": "Write API documentation",
+      "status": "Todo",
+      "assignedMembers": [],
+      "dueDate": "2026-09-25",
+      "dueTime": "12:00",
+      "isAssigned": false,
+      "estimatedHours": 4,
+      "priority": "Low",
+      "order": 3,
+      "createdOn": "2026-09-03"
+    },
+    {
+      "id": 4,
+      "title": "Setup CI/CD pipeline",
+      "status": "Review",
+      "assignedMembers": ["Alice Johnson", "Diana Prince"],
+      "dueDate": "2026-09-18",
+      "dueTime": "10:00",
+      "isAssigned": true,
+      "estimatedHours": 12,
+      "priority": "Medium",
+      "order": 4,
+      "createdOn": "2026-09-04"
+    },
+    {
+      "id": 5,
+      "title": "Performance optimization",
+      "status": "Todo",
+      "assignedMembers": ["Bob Smith"],
+      "dueDate": "2026-09-30",
+      "dueTime": "16:00",
+      "isAssigned": true,
+      "estimatedHours": 20,
+      "priority": "High",
+      "order": 5,
+      "createdOn": "2026-09-05"
+    },
+    {
+      "id": 6,
+      "title": "Mobile responsive testing",
+      "status": "In Progress",
+      "assignedMembers": ["Charlie Brown", "Diana Prince"],
+      "dueDate": "2026-09-22",
+      "dueTime": "11:30",
+      "isAssigned": true,
+      "estimatedHours": 6,
+      "priority": "Medium",
+      "order": 6,
+      "createdOn": "2026-09-06"
+    }
+  ],
+  "members": [
+    { "id": 1, "name": "Alice Johnson" },
+    { "id": 2, "name": "Bob Smith" },
+    { "id": 3, "name": "Charlie Brown" },
+    { "id": 4, "name": "Diana Prince" },
+    { "id": 5, "name": "Eve Wilson" }
+  ]
+}
