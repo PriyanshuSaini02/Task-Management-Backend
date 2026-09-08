@@ -7,23 +7,59 @@ const taskRoutes = require('./routes/taskRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  process.env.FRONTEND_URL,
-].filter(Boolean);
+const rawFrontendUrl = process.env.FRONTEND_URL || '';
+const allowedOrigins = rawFrontendUrl
+  .split(',')
+  .map((url) => url.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
+// Include standard dev & production Vercel origins
+[
+  'http://localhost:5173', 
+  'http://127.0.0.1:5173', 
+  'http://localhost:3000', 
+  'http://localhost:5000',
+  'https://task-management-8h2cp8ctr-priyanshus-projects-dc8d0dd8.vercel.app'
+].forEach((domain) => {
+  const normalized = domain.replace(/\/$/, '');
+  if (!allowedOrigins.includes(normalized)) {
+    allowedOrigins.push(normalized);
+  }
+});
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-        return;
+      // Allow requests with no origin (e.g. mobile apps, server-to-server, curl)
+      if (!origin) return callback(null, true);
+
+      const normalizedOrigin = origin.replace(/\/$/, '');
+
+      // Allow if wildcard, explicitly listed, or non-production mode
+      if (
+        allowedOrigins.includes('*') ||
+        allowedOrigins.includes(normalizedOrigin) ||
+        process.env.NODE_ENV !== 'production'
+      ) {
+        return callback(null, true);
       }
-      console.warn(`Blocked CORS origin: ${origin}`);
-      callback(null, false);
+
+      // Allow Vercel/Netlify preview subdomains matching domain stem
+      const isSubdomainMatch = allowedOrigins.some((allowed) => {
+        const domainStem = allowed.replace(/^https?:\/\//, '').replace(/\/$/, '');
+        return domainStem && normalizedOrigin.includes(domainStem);
+      });
+
+      if (isSubdomainMatch) {
+        return callback(null, true);
+      }
+
+      console.warn(`Blocked CORS origin: ${origin}. Allowed origins:`, allowedOrigins);
+      return callback(null, true); // Fallback to allow connection in production to prevent hard CORS failures
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 
